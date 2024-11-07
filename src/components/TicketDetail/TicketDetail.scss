@@ -1,0 +1,34 @@
+@use '../../styles/constants' as *;
+
+.details {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  margin-bottom: 10px;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 600;
+
+  &__col {
+    display: flex;
+    flex-direction: column;
+
+    &:first-of-type {
+      margin-left: 20px;
+    }
+
+    &:last-of-type {
+      margin-right: 80px;
+    }
+  }
+
+  &__title {
+    color: $text-faded-color;
+
+  }
+
+  &__content {
+
+  }
+}

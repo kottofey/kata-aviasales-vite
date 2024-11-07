@@ -1,0 +1,14 @@
+@use '../../styles/constants' as *;
+
+.ShowMoreButton {
+  width: 498px;
+  height: 50px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+
+  background-color: $accent-color;
+  color: $filter-box-bg-color;
+  letter-spacing: 0.8px;
+  font-weight: 600;
+  border-radius: $btn-bd-radius;
+}

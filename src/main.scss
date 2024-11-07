@@ -1,0 +1,25 @@
+html {
+  box-sizing: border-box;
+  background-color: #F3F7FA;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+ul,
+li,
+body,
+p,
+button {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: none;
+  font: inherit;
+}
+
+a, a:visited {
+  text-decoration: none;
+  color: inherit;
+}
