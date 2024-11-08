@@ -1,4 +1,4 @@
 import './ShowMoreButton.scss';
-import ShowMoreButton from './ShowMoreButton.jsx';
+import ShowMoreButton from './ShowMoreButton';
 
 export default ShowMoreButton;

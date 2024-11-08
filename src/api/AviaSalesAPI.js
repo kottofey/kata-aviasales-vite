@@ -1,24 +1,25 @@
 export default class AviaSalesAPI {
   constructor() {
     this.searchId = null;
+    this.response = null;
   }
 
   BASE_API_URL = 'https://aviasales-test-api.kata.academy';
 
   callApi = async (url) => {
-    let response = await fetch(url, {
+    this.response = await fetch(url, {
       method: 'GET',
       headers: {
         accept: 'application/json',
       },
     });
 
-    if (!response.ok) {
+    if (!this.response.ok) {
       throw new Error('APIError');
     }
 
-    response = await response.json();
-    return response;
+    this.response = await this.response.json();
+    return this.response;
   };
 
   getSearchId = async () => {
@@ -35,11 +36,3 @@ export default class AviaSalesAPI {
     return this.callApi(url);
   };
 }
-//
-// const q = new AviaSalesAPI();
-//
-// try {
-//   q.searchId = await q.getSearchId();
-// } catch (e) {
-//   console.error(e.message);
-// }

@@ -1,20 +1,30 @@
 @use '../../styles/constants' as *;
+
 .App {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  font-family: "Open Sans", sans-serif;
-  font-size: 12px;
-  color: $text-color;
+  flex-direction: row;
+  justify-content: center;
+  column-gap: 20px;
 
   width: 95%;
-  margin: 10px auto;
+  margin: 0 auto;
 
-  // fixme DEBUG
-  border: 1px solid #000;
-
-  &__logo {
-    width: 60px;
+  @media screen and (width < 740px) {
+    flex-direction: column;
+    row-gap: 20px;
+    align-items: center;
   }
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.logo {
+  display: flex;
+  width: 60px;
+  height: 60px;
+  margin: 0 auto;
 }

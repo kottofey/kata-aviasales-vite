@@ -1,11 +1,10 @@
 import { useState } from 'react';
-import classNames from 'classnames';
 
 export default function TopFilter() {
   const [current, setCurrent] = useState('cheap');
 
-  const handleClick = (e) => {
-    setCurrent(e.target.id);
+  const handleClick = (evt) => {
+    setCurrent(evt.target.id);
   };
 
   return (
@@ -18,7 +17,7 @@ export default function TopFilter() {
         }
         type='button'
         id='cheap'
-        onClick={(e) => handleClick(e)}
+        onClick={(evt) => handleClick(evt)}
       >
         САМЫЙ ДЕШЕВЫЙ
       </button>
@@ -30,7 +29,7 @@ export default function TopFilter() {
         }
         type='button'
         id='fast'
-        onClick={(e) => handleClick(e)}
+        onClick={(evt) => handleClick(evt)}
       >
         САМЫЙ БЫСТРЫЙ
       </button>
@@ -42,7 +41,7 @@ export default function TopFilter() {
         }
         type='button'
         id='optimal'
-        onClick={(e) => handleClick(e)}
+        onClick={(evt) => handleClick(evt)}
       >
         ОПТИМАЛЬНЫЙ
       </button>

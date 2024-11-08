@@ -15,16 +15,16 @@ export default function App() {
 
     const fetchTickets = async () => {
       const api = new AviaSalesAPI();
-      try {
-        api.searchId = await api.getSearchId();
-        const result = await api.getTickets();
-        if (!ignore) setTickets(result);
-      } catch (error) {
-        console.error(error.message);
-      }
+      api.searchId = await api.getSearchId();
+      const result = await api.getTickets();
+      if (!ignore) setTickets(result);
     };
 
-    fetchTickets();
+    try {
+      fetchTickets().then(() => {});
+    } catch (error) {
+      console.error(error.message);
+    }
 
     return () => {
       ignore = true;
@@ -32,23 +32,32 @@ export default function App() {
   }, []);
 
   return (
-    <div className='App'>
+    <>
       <img
-        className='App__logo'
+        className='logo'
         src={aviaSalesLogo}
         alt='AviaSales Logo'
       />
-      <SideFilter />
-      <TopFilter />
-      {tickets.tickets.slice(0, 5).map((ticket, idx) => (
-        <Ticket
-          ticket={ticket}
-          // List order won't be changing so index for key is ok
-          key={idx}
-        />
-      ))}
+      <div className='App'>
+        <SideFilter />
+        <main className='main'>
+          <TopFilter />
+          {tickets.tickets.slice(0, 5).map((ticket) => {
+            const key =
+              ticket.segments[0].origin +
+              ticket.segments[0].destination +
+              ticket.segments[0].date;
 
-      <ShowMoreButton />
-    </div>
+            return (
+              <Ticket
+                ticket={ticket}
+                key={key}
+              />
+            );
+          })}
+          <ShowMoreButton />
+        </main>
+      </div>
+    </>
   );
 }

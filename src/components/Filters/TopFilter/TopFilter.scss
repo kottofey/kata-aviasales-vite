@@ -3,7 +3,7 @@
 .top-filter {
   display: flex;
   flex-direction: row;
-  margin: 20px;
+  width: min-content;
   box-shadow: 0 2px 8px 0 $filter-box-shadow;
   font-size: 14px;
 

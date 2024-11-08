@@ -4,14 +4,15 @@
   display: flex;
   position: relative;
   flex-direction: column;
-  flex-grow: 0;
-  flex-shrink: 0;
+  flex: 0 0;
 
   width: 498px;
   height: 185px;
+
   background-color: $filter-box-bg-color;
   box-shadow: 0 2px 8px 0 $filter-box-shadow;
   border-radius: $box-bd-radius;
+
 
   &__header {
     display: flex;
@@ -25,10 +26,6 @@
     font-weight: 600;
     margin: 26px 0 0 20px;
     line-height: 20px;
-
-    &::after {
-      content: ' Р';
-    }
   }
 
   &__logo {
