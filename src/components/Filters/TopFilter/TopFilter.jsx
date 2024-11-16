@@ -57,7 +57,7 @@ function TopFilter({
 }
 
 const mapStateToProps = (state) => {
-  return { current: state.top };
+  return { current: state.filters.top };
 };
 
 export default connect(mapStateToProps, actions)(TopFilter);

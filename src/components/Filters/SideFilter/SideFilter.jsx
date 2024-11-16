@@ -60,7 +60,7 @@ function SideFilter({
 }
 
 const mapStateToProps = (state) => {
-  return { side: state.side };
+  return { side: state.filters.side };
 };
 
 export default connect(mapStateToProps, actions)(SideFilter);

@@ -1,3 +1,6 @@
+import { combineReducers } from '@reduxjs/toolkit';
+
+import { isAllOn, allOnState, swapAllFilters } from '../helpers';
 import {
   SIDE_FILTER_ALL,
   SIDE_FILTER_NO_STOPS,
@@ -35,85 +38,31 @@ export const sideFilterReducer = (
   },
   action
 ) => {
+  if (isAllOn(state, action)) return allOnState(state, action);
+
+  const thisFilterState = {
+    ...state,
+    SIDE_FILTER_ALL: false,
+    [action.type]: !state[action.type],
+  };
+
   switch (action.type) {
     case SIDE_FILTER_ALL:
-      return {
-        SIDE_FILTER_ALL: !state.SIDE_FILTER_ALL,
-        SIDE_FILTER_NO_STOPS: !state.SIDE_FILTER_ALL,
-        SIDE_FILTER_ONE_STOP: !state.SIDE_FILTER_ALL,
-        SIDE_FILTER_TWO_STOPS: !state.SIDE_FILTER_ALL,
-        SIDE_FILTER_THREE_STOPS: !state.SIDE_FILTER_ALL,
-      };
+      return swapAllFilters(state);
     case SIDE_FILTER_NO_STOPS:
-      if (
-        !state.SIDE_FILTER_NO_STOPS &&
-        state.SIDE_FILTER_ONE_STOP &&
-        state.SIDE_FILTER_TWO_STOPS &&
-        state.SIDE_FILTER_THREE_STOPS
-      )
-        return {
-          ...state,
-          SIDE_FILTER_ALL: true,
-          SIDE_FILTER_NO_STOPS: true,
-        };
-
-      return {
-        ...state,
-        SIDE_FILTER_ALL: false,
-        SIDE_FILTER_NO_STOPS: !state.SIDE_FILTER_NO_STOPS,
-      };
+      return thisFilterState;
     case SIDE_FILTER_ONE_STOP:
-      if (
-        !state.SIDE_FILTER_ONE_STOP &&
-        state.SIDE_FILTER_NO_STOPS &&
-        state.SIDE_FILTER_TWO_STOPS &&
-        state.SIDE_FILTER_THREE_STOPS
-      )
-        return {
-          ...state,
-          SIDE_FILTER_ALL: true,
-          SIDE_FILTER_ONE_STOP: true,
-        };
-      return {
-        ...state,
-        SIDE_FILTER_ALL: false,
-        SIDE_FILTER_ONE_STOP: !state.SIDE_FILTER_ONE_STOP,
-      };
+      return thisFilterState;
     case SIDE_FILTER_TWO_STOPS:
-      if (
-        !state.SIDE_FILTER_TWO_STOPS &&
-        state.SIDE_FILTER_NO_STOPS &&
-        state.SIDE_FILTER_ONE_STOP &&
-        state.SIDE_FILTER_THREE_STOPS
-      )
-        return {
-          ...state,
-          SIDE_FILTER_ALL: true,
-          SIDE_FILTER_TWO_STOPS: true,
-        };
-      return {
-        ...state,
-        SIDE_FILTER_ALL: false,
-        SIDE_FILTER_TWO_STOPS: !state.SIDE_FILTER_TWO_STOPS,
-      };
+      return thisFilterState;
     case SIDE_FILTER_THREE_STOPS:
-      if (
-        !state.SIDE_FILTER_THREE_STOPS &&
-        state.SIDE_FILTER_NO_STOPS &&
-        state.SIDE_FILTER_ONE_STOP &&
-        state.SIDE_FILTER_TWO_STOPS
-      )
-        return {
-          ...state,
-          SIDE_FILTER_ALL: true,
-          SIDE_FILTER_THREE_STOPS: true,
-        };
-      return {
-        ...state,
-        SIDE_FILTER_ALL: false,
-        SIDE_FILTER_THREE_STOPS: !state.SIDE_FILTER_THREE_STOPS,
-      };
+      return thisFilterState;
     default:
       return state;
   }
 };
+
+export default combineReducers({
+  top: topFilterReducer,
+  side: sideFilterReducer,
+});

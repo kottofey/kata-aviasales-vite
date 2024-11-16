@@ -5,12 +5,12 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import './main.scss';
 import App from './components/App';
-import * as filters from './redux/reducers/filters';
+import filtersReducer from './redux/reducers/filters';
 
 const store = configureStore({
   reducer: {
-    top: filters.topFilterReducer,
-    side: filters.sideFilterReducer,
+    filters: filtersReducer,
+    tickets: () => [],
   },
 });
 
