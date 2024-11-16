@@ -1,50 +1,63 @@
-import { useState } from 'react';
+import { connect } from 'react-redux';
 
-export default function TopFilter() {
-  const [current, setCurrent] = useState('cheap');
+import * as actions from '../../../redux/actions';
 
-  const handleClick = (evt) => {
-    setCurrent(evt.target.id);
-  };
+const {
+  TOP_FILTER_CHEAPEST,
+  TOP_FILTER_FASTEST,
+  TOP_FILTER_OPTIMAL,
+} = actions;
 
+function TopFilter({
+  current,
+  topFilterCheapest,
+  topFilterFastest,
+  topFilterOptimal,
+}) {
   return (
     <aside className='top-filter'>
       <button
         className={
-          current === 'cheap'
+          current === TOP_FILTER_CHEAPEST
             ? 'top-filter__button top-filter__button--active'
             : 'top-filter__button'
         }
         type='button'
         id='cheap'
-        onClick={(evt) => handleClick(evt)}
+        onClick={topFilterCheapest}
       >
         САМЫЙ ДЕШЕВЫЙ
       </button>
       <button
         className={
-          current === 'fast'
+          current === TOP_FILTER_FASTEST
             ? 'top-filter__button top-filter__button--active'
             : 'top-filter__button'
         }
         type='button'
         id='fast'
-        onClick={(evt) => handleClick(evt)}
+        onClick={topFilterFastest}
       >
         САМЫЙ БЫСТРЫЙ
       </button>
       <button
         className={
-          current === 'optimal'
+          current === TOP_FILTER_OPTIMAL
             ? 'top-filter__button top-filter__button--active'
             : 'top-filter__button'
         }
         type='button'
         id='optimal'
-        onClick={(evt) => handleClick(evt)}
+        onClick={topFilterOptimal}
       >
         ОПТИМАЛЬНЫЙ
       </button>
     </aside>
   );
 }
+
+const mapStateToProps = (state) => {
+  return { current: state.top };
+};
+
+export default connect(mapStateToProps, actions)(TopFilter);
