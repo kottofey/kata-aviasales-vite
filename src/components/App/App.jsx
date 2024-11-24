@@ -1,63 +1,73 @@
-// import { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import classNames from 'classnames';
+import { useEffect } from 'react';
 
 import aviaSalesLogo from '../../assets/Logo.svg';
 import TopFilter from '../Filters/TopFilter';
 import SideFilter from '../Filters/SideFilter';
-// import Ticket from '../Ticket';
+import Ticket from '../Ticket';
 import ShowMoreButton from '../ShowMoreButton';
-// import AviaSalesAPI from '../../api/AviaSalesAPI';
+import * as filterActions from '../../redux/actions/filters';
+import * as ticketActions from '../../redux/actions/tickets';
 
-export default function App() {
-  // const [tickets, setTickets] = useState({ tickets: [] });
+let didInit = false;
 
-  // useEffect(() => {
-  //   let ignore = false;
-  //
-  //   const fetchTickets = async () => {
-  //     const api = new AviaSalesAPI();
-  //     api.searchId = await api.getSearchId();
-  //     const result = await api.getTickets();
-  //     if (!ignore) setTickets(result);
-  //   };
-  //
-  //   try {
-  //     fetchTickets().then(() => {});
-  //   } catch (error) {
-  //     console.error(error.message);
-  //   }
-  //
-  //   return () => {
-  //     ignore = true;
-  //   };
-  // }, []);
+function App({ tickets, isLoading, fetchTickets, ticketsShown }) {
+  const logoClass = classNames({
+    logo: true,
+    'logo--loading': isLoading,
+  });
+
+  useEffect(() => {
+    if (!didInit) {
+      didInit = true;
+      fetchTickets();
+    }
+  }, []);
 
   return (
     <>
       <img
-        className='logo'
+        className={logoClass}
         src={aviaSalesLogo}
         alt='AviaSales Logo'
       />
+      <p>{tickets.length}</p>
       <div className='App'>
         <SideFilter />
         <main className='main'>
           <TopFilter />
-          {/* {tickets.tickets.slice(0, 5).map((ticket) => { */}
-          {/*  const key = */}
-          {/*    ticket.segments[0].origin +*/}
-          {/*    ticket.segments[0].destination +*/}
-          {/*    ticket.segments[0].date; */}
+          {tickets.slice(0, ticketsShown).map((ticket) => {
+            const key =
+              ticket.segments[0].origin +
+              ticket.segments[0].destination +
+              ticket.segments[0].date;
 
-          {/*  return ( */}
-          {/*    <Ticket */}
-          {/*      ticket={ticket} */}
-          {/*      key={key} */}
-          {/*    /> */}
-          {/*  ); */}
-          {/* })} */}
+            return (
+              <Ticket
+                ticket={ticket}
+                key={key}
+              />
+            );
+          })}
           <ShowMoreButton />
         </main>
       </div>
+      <p>{ticketsShown}</p>
     </>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    tickets: state.tickets,
+    isLoading: state.isLoading,
+    error: state.error,
+    ticketsShown: state.ticketsShown,
+  };
+};
+
+export default connect(mapStateToProps, {
+  ...filterActions,
+  ...ticketActions,
+})(App);

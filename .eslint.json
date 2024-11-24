@@ -7,8 +7,7 @@
     "node_modules",
     "dist",
     "build",
-    "_archive",
-    "teest.js"
+    "_archive"
   ],
   "extends": [
     "eslint:recommended",
@@ -67,7 +66,9 @@
     "indent": [
       "error",
       2,
-      {"SwitchCase": 1}
+      {
+        "SwitchCase": 1
+      }
     ],
     "linebreak-style": [
       0,
@@ -101,7 +102,9 @@
       {
         "extensions": [
           ".js",
-          ".jsx"
+          ".jsx",
+          ".ts",
+          ".tsx"
         ]
       }
     ],
@@ -111,6 +114,7 @@
     "react/state-in-constructor": "off",
     "react/destructuring-assignment": "warn",
     "react/jsx-props-no-spreading": "off",
+    "react-hooks/exhaustive-deps": "off",
     "react/require-default-props": "off",
     "prettier/prettier": [
       "error",

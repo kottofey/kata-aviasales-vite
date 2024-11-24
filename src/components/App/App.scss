@@ -1,5 +1,4 @@
 @use '../../styles/constants' as *;
-
 .App {
   display: flex;
   flex-direction: row;
@@ -27,4 +26,16 @@
   width: 60px;
   height: 60px;
   margin: 0 auto;
+
+  &--loading {
+    animation-name: spin;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-duration: 3s;
+  }
+}
+
+@keyframes spin {
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(-360deg); }
 }

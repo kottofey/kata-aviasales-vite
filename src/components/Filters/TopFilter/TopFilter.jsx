@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import * as actions from '../../../redux/actions';
+import * as actions from '../../../redux/actions/filters';
 
 const {
   TOP_FILTER_CHEAPEST,

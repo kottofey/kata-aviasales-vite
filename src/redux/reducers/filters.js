@@ -10,12 +10,9 @@ import {
   TOP_FILTER_CHEAPEST,
   TOP_FILTER_FASTEST,
   TOP_FILTER_OPTIMAL,
-} from '../actions';
+} from '../actions/filters';
 
-export const topFilterReducer = (
-  state = TOP_FILTER_CHEAPEST,
-  action
-) => {
+export const top = (state = TOP_FILTER_CHEAPEST, action) => {
   switch (action.type) {
     case TOP_FILTER_CHEAPEST:
       return TOP_FILTER_CHEAPEST;
@@ -28,7 +25,7 @@ export const topFilterReducer = (
   }
 };
 
-export const sideFilterReducer = (
+export const side = (
   state = {
     SIDE_FILTER_ALL: true,
     SIDE_FILTER_NO_STOPS: true,
@@ -63,6 +60,6 @@ export const sideFilterReducer = (
 };
 
 export default combineReducers({
-  top: topFilterReducer,
-  side: sideFilterReducer,
+  top,
+  side,
 });
