@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { useEffect } from 'react';
+import { notification } from 'antd';
 
 import aviaSalesLogo from '../../assets/Logo.svg';
 import TopFilter from '../Filters/TopFilter';
@@ -13,10 +14,20 @@ import * as ticketActions from '../../redux/actions/tickets';
 let didInit = false;
 
 function App({ tickets, isLoading, fetchTickets, ticketsShown }) {
+  const [api, contextHolder] = notification.useNotification();
+
   const logoClass = classNames({
     logo: true,
     'logo--loading': isLoading,
   });
+
+  useEffect(() => {
+    api.open({
+      message: isLoading
+        ? 'Билеты загружаются'
+        : 'Загрузка завершена',
+    });
+  }, [isLoading]);
 
   useEffect(() => {
     if (!didInit) {
@@ -32,7 +43,7 @@ function App({ tickets, isLoading, fetchTickets, ticketsShown }) {
         src={aviaSalesLogo}
         alt='AviaSales Logo'
       />
-      <p>{tickets.length}</p>
+      {contextHolder}
       <div className='App'>
         <SideFilter />
         <main className='main'>
@@ -53,7 +64,6 @@ function App({ tickets, isLoading, fetchTickets, ticketsShown }) {
           <ShowMoreButton />
         </main>
       </div>
-      <p>{ticketsShown}</p>
     </>
   );
 }
