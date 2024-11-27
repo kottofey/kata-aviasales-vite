@@ -3,6 +3,9 @@ import {
   SIDE_FILTER_ONE_STOP,
   SIDE_FILTER_THREE_STOPS,
   SIDE_FILTER_TWO_STOPS,
+  TOP_FILTER_FASTEST,
+  TOP_FILTER_OPTIMAL,
+  TOP_FILTER_CHEAPEST,
 } from './actions/filters';
 
 export const isAllOn = (state, action) =>
@@ -40,3 +43,34 @@ export const swapAllFilters = (state) => ({
   SIDE_FILTER_TWO_STOPS: !state.SIDE_FILTER_ALL,
   SIDE_FILTER_THREE_STOPS: !state.SIDE_FILTER_ALL,
 });
+
+export const priceSorting = (type, a, b) => {
+  switch (type) {
+    case TOP_FILTER_CHEAPEST:
+      return a.price - b.price;
+    case TOP_FILTER_FASTEST:
+      return a.segments[0].duration - b.segments[0].duration;
+    case TOP_FILTER_OPTIMAL:
+      return (
+        a.segments[0].duration -
+        b.segments[0].duration +
+        a.price -
+        b.price
+      );
+    default:
+      return 0;
+  }
+};
+
+export const stopsSorting = (side, ticket) => {
+  return (
+    (side.SIDE_FILTER_NO_STOPS &&
+      ticket.segments[0].stops.length === 0) ||
+    (side.SIDE_FILTER_ONE_STOP &&
+      ticket.segments[0].stops.length === 1) ||
+    (side.SIDE_FILTER_TWO_STOPS &&
+      ticket.segments[0].stops.length === 2) ||
+    (side.SIDE_FILTER_THREE_STOPS &&
+      ticket.segments[0].stops.length === 3)
+  );
+};

@@ -28,10 +28,16 @@ export const isLoading = (state = false, action) => {
   }
 };
 
-export const fetchError = (state = 0, action) => {
+export const fetchError = (
+  state = { count: 0, cause: null },
+  action
+) => {
   switch (action.type) {
     case REQ_TICKETS_ERROR:
-      return state + 1;
+      return {
+        count: state.count + 1,
+        cause: action.payload,
+      };
     default:
       return state;
   }

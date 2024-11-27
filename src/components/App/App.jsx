@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 import classNames from 'classnames';
-import { useEffect } from 'react';
-import { notification } from 'antd';
+import { useEffect, useRef } from 'react';
 
 import aviaSalesLogo from '../../assets/Logo.svg';
 import TopFilter from '../Filters/TopFilter';
@@ -10,31 +9,34 @@ import Ticket from '../Ticket';
 import ShowMoreButton from '../ShowMoreButton';
 import * as filterActions from '../../redux/actions/filters';
 import * as ticketActions from '../../redux/actions/tickets';
+import { priceSorting, stopsSorting } from '../../redux/helpers';
 
-let didInit = false;
-
-function App({ tickets, isLoading, fetchTickets, ticketsShown }) {
-  const [api, contextHolder] = notification.useNotification();
-
+function App({
+  tickets,
+  ticketsShown,
+  isLoading,
+  fetchTickets,
+  top,
+  side,
+}) {
   const logoClass = classNames({
     logo: true,
     'logo--loading': isLoading,
   });
+  const didInit = useRef(false);
 
   useEffect(() => {
-    api.open({
-      message: isLoading
-        ? 'Билеты загружаются'
-        : 'Загрузка завершена',
-    });
-  }, [isLoading]);
+    if (!didInit.current) fetchTickets();
+    didInit.current = true;
+  }, [fetchTickets]);
 
-  useEffect(() => {
-    if (!didInit) {
-      didInit = true;
-      fetchTickets();
-    }
-  }, []);
+  const ticketsToRender = tickets
+    .slice(0)
+    .filter((ticket) => {
+      return stopsSorting(side, ticket);
+    })
+    .sort((a, b) => priceSorting(top, a, b))
+    .slice(0, ticketsShown);
 
   return (
     <>
@@ -43,12 +45,12 @@ function App({ tickets, isLoading, fetchTickets, ticketsShown }) {
         src={aviaSalesLogo}
         alt='AviaSales Logo'
       />
-      {contextHolder}
       <div className='App'>
         <SideFilter />
         <main className='main'>
           <TopFilter />
-          {tickets.slice(0, ticketsShown).map((ticket) => {
+          {ticketsToRender.map((ticket) => {
+            if (!ticket.price) return <p key='key'>NO OK</p>;
             const key =
               ticket.segments[0].origin +
               ticket.segments[0].destination +
@@ -61,7 +63,11 @@ function App({ tickets, isLoading, fetchTickets, ticketsShown }) {
               />
             );
           })}
-          <ShowMoreButton />
+          {ticketsToRender.length ? (
+            <ShowMoreButton />
+          ) : (
+            'Рейсов, подходящих под заданные фильтры, не найдено'
+          )}
         </main>
       </div>
     </>
@@ -74,6 +80,8 @@ const mapStateToProps = (state) => {
     isLoading: state.isLoading,
     error: state.error,
     ticketsShown: state.ticketsShown,
+    top: state.filters.top,
+    side: state.filters.side,
   };
 };
 

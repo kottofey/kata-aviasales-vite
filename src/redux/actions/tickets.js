@@ -25,8 +25,9 @@ export const rcvdId = (id) => ({
   payload: id,
 });
 
-export const reqTicketsError = () => ({
+export const reqTicketsError = (e) => ({
   type: REQ_TICKETS_ERROR,
+  payload: e.message,
 });
 
 export const moreTickets = () => ({
@@ -51,7 +52,7 @@ export const fetchTickets = () => async (dispatch, getState) => {
       dispatch(fetchTickets());
     }
   } catch (e) {
-    dispatch(reqTicketsError());
+    dispatch(reqTicketsError(e));
     if (e.cause.status === 500) dispatch(fetchTickets());
   }
 };

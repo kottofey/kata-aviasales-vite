@@ -45,6 +45,7 @@
   "plugins": [
     "babel",
     "react",
+    "react-hooks",
     "import",
     "prettier"
   ],
@@ -108,13 +109,14 @@
         ]
       }
     ],
-    "react/react-in-jsx-scope": "off",
     "react/prop-types": 0,
     "react/no-unused-class-component-methods": "warn",
     "react/state-in-constructor": "off",
     "react/destructuring-assignment": "warn",
     "react/jsx-props-no-spreading": "off",
-    "react-hooks/exhaustive-deps": "off",
+    "react/react-in-jsx-scope": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
     "react/require-default-props": "off",
     "prettier/prettier": [
       "error",
