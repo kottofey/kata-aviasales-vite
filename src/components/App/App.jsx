@@ -11,6 +11,8 @@ import * as filterActions from '../../redux/actions/filters';
 import * as ticketActions from '../../redux/actions/tickets';
 import { priceSorting, stopsSorting } from '../../redux/helpers';
 
+import classes from './App.module.scss';
+
 function App({
   tickets,
   ticketsShown,
@@ -20,9 +22,10 @@ function App({
   side,
 }) {
   const logoClass = classNames({
-    logo: true,
-    'logo--loading': isLoading,
+    [classes.logo]: true,
+    [classes['logo--loading']]: isLoading,
   });
+
   const didInit = useRef(false);
 
   useEffect(() => {
@@ -45,9 +48,9 @@ function App({
         src={aviaSalesLogo}
         alt='AviaSales Logo'
       />
-      <div className='App'>
+      <div className={classes.App}>
         <SideFilter />
-        <main className='main'>
+        <main className={classes.main}>
           <TopFilter />
           {ticketsToRender.map((ticket) => {
             if (!ticket.price) return <p key='key'>NO OK</p>;

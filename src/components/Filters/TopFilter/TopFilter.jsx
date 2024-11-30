@@ -1,6 +1,9 @@
 import { connect } from 'react-redux';
+import classNames from 'classnames';
 
 import * as actions from '../../../redux/actions/filters';
+
+import classes from './TopFilter.module.scss';
 
 const {
   TOP_FILTER_CHEAPEST,
@@ -14,13 +17,17 @@ function TopFilter({
   topFilterFastest,
   topFilterOptimal,
 }) {
+  const activeButtonClass = classNames(
+    classes['top-filter__button'],
+    classes['top-filter__button--active']
+  );
   return (
-    <aside className='top-filter'>
+    <aside className={classes['top-filter']}>
       <button
         className={
           current === TOP_FILTER_CHEAPEST
-            ? 'top-filter__button top-filter__button--active'
-            : 'top-filter__button'
+            ? activeButtonClass
+            : classes['top-filter__button']
         }
         type='button'
         id='cheap'
@@ -31,8 +38,8 @@ function TopFilter({
       <button
         className={
           current === TOP_FILTER_FASTEST
-            ? 'top-filter__button top-filter__button--active'
-            : 'top-filter__button'
+            ? activeButtonClass
+            : classes['top-filter__button']
         }
         type='button'
         id='fast'
@@ -43,8 +50,8 @@ function TopFilter({
       <button
         className={
           current === TOP_FILTER_OPTIMAL
-            ? 'top-filter__button top-filter__button--active'
-            : 'top-filter__button'
+            ? activeButtonClass
+            : classes['top-filter__button']
         }
         type='button'
         id='optimal'

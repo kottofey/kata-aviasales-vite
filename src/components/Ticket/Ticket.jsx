@@ -2,6 +2,8 @@ import TicketDetail from '../TicketDetail';
 import getDuration from '../../utils/getDuration';
 import getDepartureDate from '../../utils/getDepartureDate';
 
+import classes from './Ticket.module.scss';
+
 export default function Ticket({ ticket }) {
   const { price, carrier, segments } = ticket;
 
@@ -12,11 +14,13 @@ export default function Ticket({ ticket }) {
   }).format(price);
 
   return (
-    <article className='ticket'>
-      <header className='ticket__header'>
-        <span className='ticket__price'>{priceFormatted}</span>
+    <article className={classes.ticket}>
+      <header className={classes.ticket__header}>
+        <span className={classes.ticket__price}>
+          {priceFormatted}
+        </span>
         <img
-          className='ticket__logo'
+          className={classes.ticket__logo}
           src={`https://pics.avs.io/110/36/${carrier}.png`}
           alt={`${carrier} logo`}
         />

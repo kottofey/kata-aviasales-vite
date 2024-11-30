@@ -2,10 +2,12 @@ import { connect } from 'react-redux';
 
 import * as actions from '../../redux/actions/tickets';
 
+import classes from './ShowMoreButton.module.scss';
+
 function ShowMoreButton({ moreTickets }) {
   return (
     <button
-      className='ShowMoreButton'
+      className={classes.ShowMoreButton}
       id='showMoreButton'
       type='button'
       onClick={moreTickets}
