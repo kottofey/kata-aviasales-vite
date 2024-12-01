@@ -6,6 +6,7 @@ export const FETCH_SUCCESS = 'FETCH_SUCCESS';
 export const REQ_TICKETS_ERROR = 'REQ_TICKETS_ERROR';
 export const RCVD_ID = 'RCVD_ID';
 export const MORE_TICKETS = 'MORE_TICKETS';
+export const CLOSE_ERROR = 'CLOSE_ERROR';
 
 export const reqTicketsStart = () => ({
   type: REQ_TICKETS_START,
@@ -28,6 +29,10 @@ export const rcvdId = (id) => ({
 export const reqTicketsError = (e) => ({
   type: REQ_TICKETS_ERROR,
   payload: e.message,
+});
+
+export const closeError = () => ({
+  type: CLOSE_ERROR,
 });
 
 export const moreTickets = () => ({

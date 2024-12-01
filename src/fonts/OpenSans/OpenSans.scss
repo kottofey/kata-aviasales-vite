@@ -1,7 +1,7 @@
 @font-face {
   font-family: 'Open Sans';
   src: local('Open Sans Regular'),
-  url('./OpenSans-Regular.ttf') format('truetype');
+  url('./OpenSans-Regular.ttf');
 
   font-weight: normal;
   font-style: normal;
@@ -10,7 +10,7 @@
 @font-face {
   font-family: 'Open Sans';
   src: local('Open Sans Italic'),
-  url('./OpenSans-Italic.ttf') format('truetype');
+  url('./OpenSans-Italic.ttf');
 
   font-weight: normal;
   font-style: italic;
@@ -19,7 +19,7 @@
 @font-face {
   font-family: 'Open Sans';
   src: local('Open Sans Bold'),
-  url('./OpenSans-Bold.ttf') format('truetype');
+  url('./OpenSans-Bold.ttf');
 
   font-weight: bold;
   font-style: normal;
@@ -28,7 +28,7 @@
 @font-face {
   font-family: 'Open Sans';
   src: local('Open Sans Bold Italic'),
-  url('./OpenSans-BoldItalic.ttf') format('truetype');
+  url('./OpenSans-BoldItalic.ttf');
 
   font-weight: bold;
   font-style: italic;
@@ -36,7 +36,7 @@
 @font-face {
   font-family: 'Open Sans';
   src: local('Open Sans Semi Bold'),
-  url('./OpenSans-SemiBold.ttf') format('truetype');
+  url('./OpenSans-SemiBold.ttf');
 
   font-weight: 600;
   font-style: normal;
@@ -44,7 +44,7 @@
 @font-face {
   font-family: 'Open Sans';
   src: local('Open Sans Bold Italic'),
-  url('./OpenSans-SemiBoldItalic.ttf') format('truetype');
+  url('./OpenSans-SemiBoldItalic.ttf');
 
   font-weight: 600;
   font-style: italic;

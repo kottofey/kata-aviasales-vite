@@ -1,22 +1,21 @@
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 
-import * as actions from '../../../redux/actions/filters';
-
-import classes from './TopFilter.module.scss';
-
-const {
+import {
   TOP_FILTER_CHEAPEST,
   TOP_FILTER_FASTEST,
   TOP_FILTER_OPTIMAL,
-} = actions;
-
-function TopFilter({
-  current,
   topFilterCheapest,
   topFilterFastest,
   topFilterOptimal,
-}) {
+} from '../../../redux/actions/filters';
+
+import classes from './TopFilter.module.scss';
+
+export default function TopFilter() {
+  const dispatch = useDispatch();
+  const current = useSelector((state) => state.filters.top);
+
   const activeButtonClass = classNames(
     classes['top-filter__button'],
     classes['top-filter__button--active']
@@ -31,7 +30,7 @@ function TopFilter({
         }
         type='button'
         id='cheap'
-        onClick={topFilterCheapest}
+        onClick={() => dispatch(topFilterCheapest())}
       >
         САМЫЙ ДЕШЕВЫЙ
       </button>
@@ -43,7 +42,7 @@ function TopFilter({
         }
         type='button'
         id='fast'
-        onClick={topFilterFastest}
+        onClick={() => dispatch(topFilterFastest())}
       >
         САМЫЙ БЫСТРЫЙ
       </button>
@@ -55,16 +54,10 @@ function TopFilter({
         }
         type='button'
         id='optimal'
-        onClick={topFilterOptimal}
+        onClick={() => dispatch(topFilterOptimal())}
       >
         ОПТИМАЛЬНЫЙ
       </button>
     </aside>
   );
 }
-
-const mapStateToProps = (state) => {
-  return { current: state.filters.top };
-};
-
-export default connect(mapStateToProps, actions)(TopFilter);

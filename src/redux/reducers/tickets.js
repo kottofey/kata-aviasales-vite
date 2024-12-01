@@ -1,4 +1,6 @@
 // Reducers
+import { createSelector } from '@reduxjs/toolkit';
+
 import {
   REQ_TICKETS_START,
   REQ_TICKETS_DONE,
@@ -6,7 +8,9 @@ import {
   REQ_TICKETS_ERROR,
   RCVD_ID,
   MORE_TICKETS,
+  CLOSE_ERROR,
 } from '../actions/tickets';
+import { priceSorting, stopsSorting } from '../helpers';
 
 export const tickets = (state = [], action) => {
   switch (action.type) {
@@ -29,14 +33,21 @@ export const isLoading = (state = false, action) => {
 };
 
 export const fetchError = (
-  state = { count: 0, cause: null },
+  state = { count: 0, isOpened: false, cause: '' },
   action
 ) => {
   switch (action.type) {
     case REQ_TICKETS_ERROR:
       return {
+        ...state,
         count: state.count + 1,
         cause: action.payload,
+        isOpened: true,
+      };
+    case CLOSE_ERROR:
+      return {
+        ...state,
+        isOpened: false,
       };
     default:
       return state;
@@ -62,3 +73,21 @@ export const ticketsShown = (state = 5, action) => {
       return state;
   }
 };
+
+export const selectFilteredTickets = createSelector(
+  [
+    (state) => state.tickets,
+    (state) => state.filters.side,
+    (state) => state.filters.top,
+    (state) => state.ticketsShown,
+  ],
+  (selectTickets, selectSide, selectTop, selectTicketsShown) => {
+    return selectTickets
+      .slice(0)
+      .filter((ticket) => {
+        return stopsSorting(selectSide, ticket);
+      })
+      .sort((a, b) => priceSorting(selectTop, a, b))
+      .slice(0, selectTicketsShown);
+  }
+);

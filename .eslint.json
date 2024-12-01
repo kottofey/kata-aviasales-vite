@@ -109,7 +109,7 @@
         ]
       }
     ],
-    "react/prop-types": 0,
+    "react/prop-types": "off",
     "react/no-unused-class-component-methods": "warn",
     "react/state-in-constructor": "off",
     "react/destructuring-assignment": "warn",

@@ -1,0 +1,34 @@
+@use '../../styles/constants' as *;
+
+.loadError {
+  display: none;
+  height: max-content;
+  min-width: 210px;
+  max-width: 300px;
+  border: 1px solid $btn-bd-color;
+  border-radius: 4px;
+
+  position: fixed;
+  z-index: 1;
+
+  margin: 10px;
+
+  box-shadow: 0 2px 8px 0 $filter-box-shadow;
+  background-color: $filter-box-bg-color;
+
+
+  flex-direction: column;
+  padding: 10px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.button {
+  display: block;
+  margin: 10px;
+  height: 60px;
+}
+
+.isOpened {
+  display: flex;
+}

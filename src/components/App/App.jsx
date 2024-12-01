@@ -1,26 +1,25 @@
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 import { useEffect, useRef } from 'react';
 
 import aviaSalesLogo from '../../assets/Logo.svg';
 import TopFilter from '../Filters/TopFilter';
 import SideFilter from '../Filters/SideFilter';
+import LoadError from '../LoadError';
 import Ticket from '../Ticket';
 import ShowMoreButton from '../ShowMoreButton';
-import * as filterActions from '../../redux/actions/filters';
-import * as ticketActions from '../../redux/actions/tickets';
-import { priceSorting, stopsSorting } from '../../redux/helpers';
+import { fetchTickets } from '../../redux/actions/tickets';
+import { selectFilteredTickets } from '../../redux/reducers/tickets';
 
 import classes from './App.module.scss';
 
-function App({
-  tickets,
-  ticketsShown,
-  isLoading,
-  fetchTickets,
-  top,
-  side,
-}) {
+export default function App() {
+  const dispatch = useDispatch();
+
+  const isLoading = useSelector((state) => state.isLoading);
+  const errors = useSelector((state) => state.errors.count);
+  const tickets = useSelector(selectFilteredTickets);
+
   const logoClass = classNames({
     [classes.logo]: true,
     [classes['logo--loading']]: isLoading,
@@ -29,17 +28,9 @@ function App({
   const didInit = useRef(false);
 
   useEffect(() => {
-    if (!didInit.current) fetchTickets();
+    if (!didInit.current) dispatch(fetchTickets());
     didInit.current = true;
-  }, [fetchTickets]);
-
-  const ticketsToRender = tickets
-    .slice(0)
-    .filter((ticket) => {
-      return stopsSorting(side, ticket);
-    })
-    .sort((a, b) => priceSorting(top, a, b))
-    .slice(0, ticketsShown);
+  }, [dispatch]);
 
   return (
     <>
@@ -50,9 +41,10 @@ function App({
       />
       <div className={classes.App}>
         <SideFilter />
+        <LoadError errors={errors} />
         <main className={classes.main}>
           <TopFilter />
-          {ticketsToRender.map((ticket) => {
+          {tickets.map((ticket) => {
             if (!ticket.price) return <p key='key'>NO OK</p>;
             const key =
               ticket.segments[0].origin +
@@ -66,7 +58,7 @@ function App({
               />
             );
           })}
-          {ticketsToRender.length ? (
+          {tickets.length ? (
             <ShowMoreButton />
           ) : (
             'Рейсов, подходящих под заданные фильтры, не найдено'
@@ -76,19 +68,3 @@ function App({
     </>
   );
 }
-
-const mapStateToProps = (state) => {
-  return {
-    tickets: state.tickets,
-    isLoading: state.isLoading,
-    error: state.error,
-    ticketsShown: state.ticketsShown,
-    top: state.filters.top,
-    side: state.filters.side,
-  };
-};
-
-export default connect(mapStateToProps, {
-  ...filterActions,
-  ...ticketActions,
-})(App);
