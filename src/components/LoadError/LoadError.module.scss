@@ -1,7 +1,7 @@
 @use '../../styles/constants' as *;
 
 .loadError {
-  display: none;
+  display: flex;
   height: max-content;
   min-width: 210px;
   max-width: 300px;
@@ -27,8 +27,4 @@
   display: block;
   margin: 10px;
   height: 60px;
-}
-
-.isOpened {
-  display: flex;
 }

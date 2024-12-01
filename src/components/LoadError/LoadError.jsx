@@ -1,4 +1,3 @@
-import classnames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { closeError } from '../../redux/actions/tickets';
@@ -7,16 +6,12 @@ import classes from './LoadError.module.scss';
 
 export default function LoadError({ errors }) {
   const dispatch = useDispatch();
-  const isOpened = useSelector((state) => state.errors.isOpened);
-
-  const className = classnames(classes.loadError, {
-    [classes.isOpened]: isOpened,
-  });
+  const msg = useSelector((state) => state.errors.cause);
 
   return (
-    <div className={className}>
-      Ошибка сети (уже {errors > 2 && 'аж'} {errors}), продолжаем
-      загрузку!
+    <div className={classes.loadError}>
+      Упс! <em>{msg}</em> (ошибок уже {errors > 2 && 'аж'} {errors}),
+      продолжаем загрузку!
       <button
         type='button'
         className={classes.button}

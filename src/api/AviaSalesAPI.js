@@ -8,8 +8,11 @@ const callApi = async (url) => {
     },
   });
 
+  if (!window.navigator.onLine)
+    throw Error('Нет интернета', { cause: { status: 523 } });
+
   if (!resp.ok) {
-    throw new Error('Promise Error!', { cause: resp });
+    throw new Error('Ошибка сервера', { cause: resp });
   }
 
   return resp.json();

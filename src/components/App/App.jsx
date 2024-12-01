@@ -15,6 +15,7 @@ import classes from './App.module.scss';
 
 export default function App() {
   const dispatch = useDispatch();
+  const isErrorOpened = useSelector((state) => state.errors.isOpened);
 
   const isLoading = useSelector((state) => state.isLoading);
   const errors = useSelector((state) => state.errors.count);
@@ -41,7 +42,7 @@ export default function App() {
       />
       <div className={classes.App}>
         <SideFilter />
-        <LoadError errors={errors} />
+        {isErrorOpened && <LoadError errors={errors} />}
         <main className={classes.main}>
           <TopFilter />
           {tickets.map((ticket) => {

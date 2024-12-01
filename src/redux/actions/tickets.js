@@ -58,6 +58,10 @@ export const fetchTickets = () => async (dispatch, getState) => {
     }
   } catch (e) {
     dispatch(reqTicketsError(e));
-    if (e.cause.status === 500) dispatch(fetchTickets());
+    if (e.cause.status === 500) {
+      dispatch(fetchTickets());
+    } else {
+      setTimeout(() => dispatch(fetchTickets()), 1000);
+    }
   }
 };
