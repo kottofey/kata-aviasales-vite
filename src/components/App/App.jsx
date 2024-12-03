@@ -9,7 +9,7 @@ import LoadError from '../LoadError';
 import Ticket from '../Ticket';
 import ShowMoreButton from '../ShowMoreButton';
 import { fetchTickets } from '../../redux/actions/tickets';
-import { selectFilteredTickets } from '../../redux/reducers/tickets';
+import { selectTopFilter } from '../../redux/reducers/tickets';
 
 import classes from './App.module.scss';
 
@@ -19,7 +19,7 @@ export default function App() {
 
   const isLoading = useSelector((state) => state.isLoading);
   const errors = useSelector((state) => state.errors.count);
-  const tickets = useSelector(selectFilteredTickets);
+  const tickets = useSelector(selectTopFilter);
 
   const logoClass = classNames({
     [classes.logo]: true,
@@ -41,8 +41,8 @@ export default function App() {
         alt='AviaSales Logo'
       />
       <div className={classes.App}>
-        <SideFilter />
         {isErrorOpened && <LoadError errors={errors} />}
+        <SideFilter />
         <main className={classes.main}>
           <TopFilter />
           {tickets.map((ticket) => {
