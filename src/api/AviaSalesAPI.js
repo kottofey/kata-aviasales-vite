@@ -9,10 +9,14 @@ const callApi = async (url) => {
   });
 
   if (!window.navigator.onLine)
-    throw Error('Нет интернета', { cause: { status: 523 } });
+    throw Error('Нет интернета', {
+      cause: { status: 523, statusText: 'No internet connection' },
+    });
 
   if (!resp.ok) {
-    throw new Error('Ошибка сервера', { cause: resp });
+    // console.log(`From API status: ${resp.status}`);
+    // console.log(`From API statusText: ${resp.statusText}`);
+    throw Error('Ошибка', { cause: resp });
   }
 
   return resp.json();

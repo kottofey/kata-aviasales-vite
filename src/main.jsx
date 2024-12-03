@@ -18,12 +18,12 @@ import {
 
 const store = configureStore({
   reducer: {
-    tickets,
-    isLoading,
     errors: fetchError,
-    searchId,
     ticketsShown,
+    searchId,
     filters,
+    isLoading,
+    tickets,
   },
 });
 

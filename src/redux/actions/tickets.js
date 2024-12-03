@@ -28,7 +28,7 @@ export const rcvdId = (id) => ({
 
 export const reqTicketsError = (e) => ({
   type: REQ_TICKETS_ERROR,
-  payload: e.message,
+  payload: e,
 });
 
 export const closeError = () => ({
@@ -57,11 +57,16 @@ export const fetchTickets = () => async (dispatch, getState) => {
       dispatch(fetchTickets());
     }
   } catch (e) {
-    dispatch(reqTicketsError(e));
+    dispatch(
+      reqTicketsError({
+        status: e.cause?.status,
+        statusText: e.cause?.statusText,
+      })
+    );
     if (e.cause.status === 500) {
       dispatch(fetchTickets());
     } else {
-      setTimeout(() => dispatch(fetchTickets()), 1000);
+      dispatch(reqTicketsDone());
     }
   }
 };

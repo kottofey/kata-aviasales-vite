@@ -4,14 +4,17 @@ import { closeError } from '../../redux/actions/tickets';
 
 import classes from './LoadError.module.scss';
 
-export default function LoadError({ errors }) {
+export default function LoadError() {
   const dispatch = useDispatch();
-  const msg = useSelector((state) => state.errors.cause);
+  const errors = useSelector((state) => state.errors);
 
   return (
     <div className={classes.loadError}>
-      Упс! <em>{msg}</em> (ошибок уже {errors > 2 && 'аж'} {errors}),
-      продолжаем загрузку!
+      <em>
+        {errors.status}: {errors.cause}
+      </em>
+      {errors.status !== 500 &&
+        'Попробуйте перезагрузить страницу позднее.'}
       <button
         type='button'
         className={classes.button}

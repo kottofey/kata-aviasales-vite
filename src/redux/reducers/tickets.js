@@ -33,7 +33,7 @@ export const isLoading = (state = false, action) => {
 };
 
 export const fetchError = (
-  state = { count: 0, isOpened: false, cause: '' },
+  state = { count: 0, isOpened: false, status: null, cause: '' },
   action
 ) => {
   switch (action.type) {
@@ -41,7 +41,8 @@ export const fetchError = (
       return {
         ...state,
         count: state.count + 1,
-        cause: action.payload,
+        cause: action.payload.statusText,
+        status: action.payload.status,
         isOpened: true,
       };
     case CLOSE_ERROR:
@@ -74,20 +75,24 @@ export const ticketsShown = (state = 5, action) => {
   }
 };
 
-export const selectFilteredTickets = createSelector(
+export const selectSideFilter = createSelector(
+  [(state) => state.filters.side, (state) => state.tickets],
+  (side, allTickets) => {
+    return allTickets.filter((ticket) => {
+      return stopsSorting(side, ticket);
+    });
+  }
+);
+
+export const selectTopFilter = createSelector(
   [
-    (state) => state.tickets,
-    (state) => state.filters.side,
     (state) => state.filters.top,
+    selectSideFilter,
     (state) => state.ticketsShown,
   ],
-  (selectTickets, selectSide, selectTop, selectTicketsShown) => {
-    return selectTickets
-      .slice(0)
-      .filter((ticket) => {
-        return stopsSorting(selectSide, ticket);
-      })
-      .sort((a, b) => priceSorting(selectTop, a, b))
-      .slice(0, selectTicketsShown);
+  (top, filtered, shown) => {
+    return filtered
+      .sort((a, b) => priceSorting(top, a, b))
+      .slice(0, shown);
   }
 );

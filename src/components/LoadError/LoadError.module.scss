@@ -2,23 +2,24 @@
 
 .loadError {
   display: flex;
+  flex-direction: column;
   height: max-content;
   min-width: 210px;
   max-width: 300px;
+  padding: 10px;
+  margin: 10px;
+
   border: 1px solid $btn-bd-color;
   border-radius: 4px;
 
   position: fixed;
+  left: 25%;
   z-index: 1;
 
-  margin: 10px;
 
   box-shadow: 0 2px 8px 0 $filter-box-shadow;
   background-color: $filter-box-bg-color;
 
-
-  flex-direction: column;
-  padding: 10px;
   font-size: 16px;
   text-align: center;
 }
@@ -26,5 +27,10 @@
 .button {
   display: block;
   margin: 10px;
-  height: 60px;
+  padding: 5px;
+  height: 30px;
+  border-radius: 6px;
+  background-color: $accent-color;
+  color: $filter-box-bg-color;
+
 }
