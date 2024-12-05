@@ -10,7 +10,7 @@ import {
   TOP_FILTER_CHEAPEST,
   TOP_FILTER_FASTEST,
   TOP_FILTER_OPTIMAL,
-} from '../actions/filters';
+} from '../actions/filtersAction';
 
 export const top = (state = TOP_FILTER_CHEAPEST, action) => {
   switch (action.type) {

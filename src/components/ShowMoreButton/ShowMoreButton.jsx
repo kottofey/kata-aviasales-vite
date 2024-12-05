@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 
-import { moreTickets } from '../../redux/actions/tickets';
+import { moreTickets } from '../../redux/actions/ticketsAction';
 
 import classes from './ShowMoreButton.module.scss';
 

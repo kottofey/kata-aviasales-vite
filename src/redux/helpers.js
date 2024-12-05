@@ -6,7 +6,7 @@ import {
   TOP_FILTER_FASTEST,
   TOP_FILTER_OPTIMAL,
   TOP_FILTER_CHEAPEST,
-} from './actions/filters';
+} from './actions/filtersAction';
 
 export const isAllOn = (state, action) =>
   !state[action.type] &&

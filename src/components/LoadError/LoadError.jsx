@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 
-import { closeError } from '../../redux/actions/tickets';
+import { closeError } from '../../redux/actions/ticketsAction';
 
 import classes from './LoadError.module.scss';
 

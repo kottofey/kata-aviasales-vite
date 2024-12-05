@@ -7,14 +7,14 @@ import './fonts/OpenSans/OpenSans.scss';
 import './main.scss';
 
 import App from './components/App';
-import filters from './redux/reducers/filters';
+import filters from './redux/reducers/filtersReducer';
 import {
-  tickets,
+  ticketsReducer,
   isLoading,
   fetchError,
   searchId,
   ticketsShown,
-} from './redux/reducers/tickets';
+} from './redux/reducers/ticketsReducer';
 
 const store = configureStore({
   reducer: {
@@ -23,8 +23,12 @@ const store = configureStore({
     searchId,
     filters,
     isLoading,
-    tickets,
+    tickets: ticketsReducer,
   },
+  // middleware: (getDefaultMiddleware) =>
+  //   getDefaultMiddleware({
+  //     immutableCheck: false,
+  //   }),
 });
 
 createRoot(document.getElementById('root')).render(

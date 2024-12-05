@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useMemo } from 'react';
 
 import aviaSalesLogo from '../../assets/Logo.svg';
 import TopFilter from '../Filters/TopFilter';
@@ -8,8 +8,12 @@ import SideFilter from '../Filters/SideFilter';
 import LoadError from '../LoadError';
 import Ticket from '../Ticket';
 import ShowMoreButton from '../ShowMoreButton';
-import { fetchTickets } from '../../redux/actions/tickets';
-import { selectTopFilter } from '../../redux/reducers/tickets';
+import { fetchTickets } from '../../redux/actions/ticketsAction';
+import {
+  filterTickets,
+  moreTickets,
+  sortTickets,
+} from '../../utils/ticketsHelper';
 
 import classes from './App.module.scss';
 
@@ -18,8 +22,25 @@ export default function App() {
   const isErrorOpened = useSelector((state) => state.errors.isOpened);
 
   const isLoading = useSelector((state) => state.isLoading);
-  const errors = useSelector((state) => state.errors.count);
-  const tickets = useSelector(selectTopFilter);
+  const side = useSelector((state) => state.filters.side);
+  const top = useSelector((state) => state.filters.top);
+  const shown = useSelector((state) => state.ticketsShown);
+  const tickets = useSelector((state) => state.tickets);
+
+  const ticketsFiltered = useMemo(
+    () => filterTickets(tickets, side),
+    [tickets, side]
+  );
+
+  const ticketsSorted = useMemo(
+    () => sortTickets(ticketsFiltered, top),
+    [ticketsFiltered, top]
+  );
+
+  const ticketsShown = useMemo(
+    () => moreTickets(ticketsSorted, shown),
+    [shown, ticketsSorted]
+  );
 
   const logoClass = classNames({
     [classes.logo]: true,
@@ -41,12 +62,11 @@ export default function App() {
         alt='AviaSales Logo'
       />
       <div className={classes.App}>
-        {isErrorOpened && <LoadError errors={errors} />}
+        {isErrorOpened && <LoadError />}
         <SideFilter />
         <main className={classes.main}>
           <TopFilter />
-          {tickets.map((ticket) => {
-            if (!ticket.price) return <p key='key'>NO OK</p>;
+          {ticketsShown.map((ticket) => {
             const key =
               ticket.segments[0].origin +
               ticket.segments[0].destination +
@@ -59,7 +79,7 @@ export default function App() {
               />
             );
           })}
-          {tickets.length ? (
+          {ticketsShown.length ? (
             <ShowMoreButton />
           ) : (
             'Рейсов, подходящих под заданные фильтры, не найдено'

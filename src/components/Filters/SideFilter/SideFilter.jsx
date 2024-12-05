@@ -11,7 +11,7 @@ import {
   SIDE_FILTER_ONE_STOP,
   SIDE_FILTER_TWO_STOPS,
   SIDE_FILTER_THREE_STOPS,
-} from '../../../redux/actions/filters';
+} from '../../../redux/actions/filtersAction';
 
 import classes from './SideFilter.module.scss';
 

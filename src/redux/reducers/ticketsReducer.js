@@ -9,10 +9,10 @@ import {
   RCVD_ID,
   MORE_TICKETS,
   CLOSE_ERROR,
-} from '../actions/tickets';
+} from '../actions/ticketsAction';
 import { priceSorting, stopsSorting } from '../helpers';
 
-export const tickets = (state = [], action) => {
+export const ticketsReducer = (state = [], action) => {
   switch (action.type) {
     case FETCH_SUCCESS:
       return [...state, ...action.payload];

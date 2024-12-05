@@ -8,7 +8,7 @@ import {
   topFilterCheapest,
   topFilterFastest,
   topFilterOptimal,
-} from '../../../redux/actions/filters';
+} from '../../../redux/actions/filtersAction';
 
 import classes from './TopFilter.module.scss';
 
